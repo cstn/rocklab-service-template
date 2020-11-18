@@ -18,7 +18,7 @@ async function validateAuthToken(req, res, next) {
     if (!currentUserId) {
       return res.status(401).json({
         error: 'unauthorized',
-        error_description: 'login required',
+        error_description: 'Login required',
       });
     }
 
