@@ -1,22 +1,33 @@
 import * as fs from 'fs';
 import path from 'path';
 
-let publicKey = '';
+import logger from './logger';
 
-function init() {
+let publicKey = null;
+let jwtSecret = null;
+
+function init({ secret }) {
+  // eslint-disable-next-line prefer-destructuring
+  publicKey = process.env.publicKey;
+
   try {
-    publicKey = fs.readFileSync(path.resolve('./cert/rocklab_rsa.pem'), { encoding: 'utf8' });
+    if (!publicKey) {
+      publicKey = fs.readFileSync(path.resolve(__dirname, '../../cert/rocklab_rsa.pem'), {
+        encoding: 'utf8',
+      });
+    }
   } catch (ex) {
-    // eslint-disable-next-line no-console
-    console.error('Cert: public key not found');
+    logger.warn('Encrypt: No keys found, using secret');
   }
+
+  jwtSecret = secret;
 }
 
-function getPublicKey() {
-  return publicKey;
-}
+const getPublicKey = () => publicKey;
+const getSecret = () => jwtSecret;
 
-export default {
+export {
   init,
   getPublicKey,
-}
+  getSecret,
+};
