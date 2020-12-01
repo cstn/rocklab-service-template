@@ -1,10 +1,6 @@
-function init() {}
-
-function getPublicKey() {
-  return 'public';
-}
-
 module.exports = {
-  init,
-  getPublicKey,
+  init: () => {},
+  getPrivateKey: () => '',
+  getPublicKey: () => '',
+  getSecret: () => 'secret_test',
 };
