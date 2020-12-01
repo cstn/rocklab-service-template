@@ -1,8 +1,7 @@
+import config from '../config';
 import { getAuthToken } from '../utils/requests';
 import { verifyToken } from '../utils/tokens';
 import { getPublicKey, getSecret } from '../utils/encrypt';
-
-const ISSUER = 'rocklab-identity';
 
 async function validateAuthToken(req, res, next) {
   const token = getAuthToken(req);
@@ -16,7 +15,7 @@ async function validateAuthToken(req, res, next) {
 
   try {
     const secret = getPublicKey() || getSecret();
-    const decoded = verifyToken(token, { secret, issuer: ISSUER });
+    const decoded = verifyToken(token, { secret, issuer: config.ISSUER });
     const currentUserId = decoded.sub;
 
     if (!currentUserId) {

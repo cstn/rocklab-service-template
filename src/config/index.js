@@ -1,5 +1,6 @@
 export default {
   ISSUER: 'rocklab-identity',
+  JWT_SECRET: process.env.JWT_SECRET,
 
   PGHOST: process.env.PGHOST || 'localhost',
   PGUSER: process.env.PGUSER || 'postgres',

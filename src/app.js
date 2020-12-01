@@ -4,11 +4,12 @@ import logger from 'morgan';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
 
+import config from './config';
 import debugRoute from './middlewares/debug';
 import healthRouter from './routes/healthRouter';
 import pingRouter from './routes/pingRouter';
 import {connect} from './utils/database';
-import encrypt from './utils/encrypt';
+import { init as initEncryption } from './utils/encrypt';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(cookieParser());
 app.use(debugRoute);
 
 // init
-encrypt.init();
+initEncryption({ secret: config.JWT_SECRET });
 
 // connect to db
 connect();
